@@ -12,11 +12,9 @@ The Expense Tracker App is a simple, local state management-based Flutter applic
 
 ## Screenshots
 
-### Dashboard                                                       ### Add Page
-![Dashboard Screenshot](screenshots/dashboard.jpg)          ![Add Page Screenshot](screenshots/add_page.jpg)
+                                                 
+![Dashboard Screenshot](screenshots/dashboard.jpg)          ![Add Page Screenshot](screenshots/add_page.jpg)   ![Report Page Screenshot](screenshots/report.jpg)
 
-### Report Page
-![Report Page Screenshot](screenshots/report.jpg)
 
 ## Functionality
 
