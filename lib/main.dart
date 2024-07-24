@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(ExpenseTrackerApp());
+  runApp(const ExpenseTrackerApp());
 }
 
 class ExpenseTrackerApp extends StatelessWidget {
+  const ExpenseTrackerApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,7 +19,7 @@ class ExpenseTrackerApp extends StatelessWidget {
           bodyLarge: TextStyle(color: Colors.grey[800]),
           bodyMedium: TextStyle(color: Colors.grey[600]),
         ),
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           backgroundColor: Colors.white,
           foregroundColor: Colors.indigo,
           elevation: 0,
@@ -30,7 +32,7 @@ class ExpenseTrackerApp extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
-            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(
@@ -40,11 +42,11 @@ class ExpenseTrackerApp extends StatelessWidget {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(color: Colors.indigo, width: 2),
+            borderSide: const BorderSide(color: Colors.indigo, width: 2),
           ),
           fillColor: Colors.white,
           filled: true,
-          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         ),
         cardTheme: CardTheme(
           elevation: 2,
@@ -54,12 +56,14 @@ class ExpenseTrackerApp extends StatelessWidget {
           color: Colors.white,
         ),
       ),
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -74,9 +78,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Expense Tracker',
+        title: const Text('Expense Tracker',
             style: TextStyle(fontWeight: FontWeight.bold)),
-        actions: [],
+        actions: const [],
       ),
       body: Row(
         children: [
@@ -85,7 +89,7 @@ class _HomePageState extends State<HomePage> {
               selectedIndex: _selectedIndex,
               onDestinationSelected: _onItemTapped,
               labelType: NavigationRailLabelType.selected,
-              destinations: [
+              destinations: const [
                 NavigationRailDestination(
                   icon: Icon(Icons.dashboard_outlined),
                   selectedIcon: Icon(Icons.dashboard),
@@ -128,7 +132,7 @@ class _HomePageState extends State<HomePage> {
           ? BottomNavigationBar(
               currentIndex: _selectedIndex,
               onTap: _onItemTapped,
-              items: [
+              items: const [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.dashboard_outlined),
                   activeIcon: Icon(Icons.dashboard),
@@ -174,7 +178,7 @@ class DashboardPage extends StatelessWidget {
   final List<BudgetEntry> budgets;
   final DateTime selectedMonth;
 
-  DashboardPage({
+  const DashboardPage({super.key, 
     required this.transactions,
     required this.budgets,
     required this.selectedMonth,
@@ -218,20 +222,20 @@ class DashboardPage extends StatelessWidget {
     bool isOverBudget = totalExpenses > currentBudget;
 
     return SingleChildScrollView(
-      padding: EdgeInsets.all(24),
+      padding: const EdgeInsets.all(24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildHeader(context),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           _buildExpenseCard(context, totalExpenses),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           if (currentBudget > 0)
             _buildBudgetCard(
                 context, totalExpenses, currentBudget, isOverBudget),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           _buildStatusCard(context, isOverBudget),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           _buildRecentTransactions(context),
         ],
       ),
@@ -262,7 +266,7 @@ class DashboardPage extends StatelessWidget {
               widget.onMonthSelected(picked);
             }
           },
-          icon: Icon(Icons.calendar_today, size: 18),
+          icon: const Icon(Icons.calendar_today, size: 18),
           label: Text(_formatMonth(selectedMonth)),
           style: ElevatedButton.styleFrom(
             foregroundColor: Colors.indigo,
@@ -279,7 +283,7 @@ class DashboardPage extends StatelessWidget {
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Container(
-        padding: EdgeInsets.all(24),
+        padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [Colors.indigo, Colors.indigo[700]!],
@@ -297,7 +301,7 @@ class DashboardPage extends StatelessWidget {
                     color: Colors.white70,
                   ),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               '\$${totalExpenses.toStringAsFixed(2)}',
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -319,7 +323,7 @@ class DashboardPage extends StatelessWidget {
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
-        padding: EdgeInsets.all(24),
+        padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -330,7 +334,7 @@ class DashboardPage extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             LinearProgressIndicator(
               value: percentUsed,
               backgroundColor: Colors.grey[200],
@@ -339,7 +343,7 @@ class DashboardPage extends StatelessWidget {
               ),
               minHeight: 8,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -361,7 +365,7 @@ class DashboardPage extends StatelessWidget {
           label,
           style: TextStyle(color: Colors.grey[600], fontSize: 12),
         ),
-        SizedBox(height: 4),
+        const SizedBox(height: 4),
         Text(
           '\$${amount.toStringAsFixed(2)}',
           style: TextStyle(
@@ -380,7 +384,7 @@ class DashboardPage extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       color: isOverBudget ? Colors.red[50] : Colors.green[50],
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Row(
           children: [
             Icon(
@@ -388,7 +392,7 @@ class DashboardPage extends StatelessWidget {
               color: isOverBudget ? Colors.red[700] : Colors.green[700],
               size: 32,
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Expanded(
               child: Text(
                 isOverBudget
@@ -424,16 +428,16 @@ class DashboardPage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         ListView.builder(
           shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           itemCount: recentTransactions.take(5).length,
           itemBuilder: (context, index) {
             final transaction = recentTransactions[index];
             return Card(
               elevation: 2,
-              margin: EdgeInsets.only(bottom: 12),
+              margin: const EdgeInsets.only(bottom: 12),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12)),
               child: ListTile(
@@ -448,7 +452,7 @@ class DashboardPage extends StatelessWidget {
                 ),
                 title: Text(
                   transaction.title,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 subtitle: Text(transaction.category),
                 trailing: Text(
@@ -473,7 +477,7 @@ class ManagePage extends StatefulWidget {
   final List<BudgetEntry> budgets;
   final Function(double) onUpdateBudget;
 
-  ManagePage({
+  const ManagePage({super.key, 
     required this.transactions,
     required this.onAddTransaction,
     required this.budgets,
@@ -502,7 +506,7 @@ class _ManagePageState extends State<ManagePage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.all(24),
+      padding: const EdgeInsets.all(24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -513,14 +517,14 @@ class _ManagePageState extends State<ManagePage> {
                   fontWeight: FontWeight.bold,
                 ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Card(
             child: Padding(
-              padding: EdgeInsets.all(24),
+              padding: const EdgeInsets.all(24),
               child: _buildExpenseForm(),
             ),
           ),
-          SizedBox(height: 32),
+          const SizedBox(height: 32),
           Text(
             'Set Monthly Budget',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -528,10 +532,10 @@ class _ManagePageState extends State<ManagePage> {
                   fontWeight: FontWeight.bold,
                 ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Card(
             child: Padding(
-              padding: EdgeInsets.all(24),
+              padding: const EdgeInsets.all(24),
               child: _buildBudgetForm(),
             ),
           ),
@@ -547,7 +551,7 @@ class _ManagePageState extends State<ManagePage> {
         children: [
           TextFormField(
             controller: _titleController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Title',
               prefixIcon: Icon(Icons.title),
             ),
@@ -558,10 +562,10 @@ class _ManagePageState extends State<ManagePage> {
               return null;
             },
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           DropdownButtonFormField<String>(
             value: _selectedCategory,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Category',
               prefixIcon: Icon(Icons.category),
             ),
@@ -575,10 +579,10 @@ class _ManagePageState extends State<ManagePage> {
               });
             },
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           TextFormField(
             controller: _amountController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Amount',
               prefixIcon: Icon(Icons.attach_money),
             ),
@@ -593,13 +597,13 @@ class _ManagePageState extends State<ManagePage> {
               return null;
             },
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           ElevatedButton(
             onPressed: _submitExpense,
-            child: Text('Add Expense'),
             style: ElevatedButton.styleFrom(
-              minimumSize: Size(double.infinity, 50),
+              minimumSize: const Size(double.infinity, 50),
             ),
+            child: const Text('Add Expense'),
           ),
         ],
       ),
@@ -613,7 +617,7 @@ class _ManagePageState extends State<ManagePage> {
         children: [
           TextFormField(
             controller: _budgetController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Monthly Budget',
               prefixIcon: Icon(Icons.account_balance_wallet),
             ),
@@ -628,13 +632,13 @@ class _ManagePageState extends State<ManagePage> {
               return null;
             },
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           ElevatedButton(
             onPressed: _updateBudget,
-            child: Text('Update Budget'),
             style: ElevatedButton.styleFrom(
-              minimumSize: Size(double.infinity, 50),
+              minimumSize: const Size(double.infinity, 50),
             ),
+            child: const Text('Update Budget'),
           ),
         ],
       ),
@@ -652,7 +656,7 @@ class _ManagePageState extends State<ManagePage> {
       _titleController.clear();
       _amountController.clear();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Expense added successfully')),
+        const SnackBar(content: Text('Expense added successfully')),
       );
     }
   }
@@ -661,7 +665,7 @@ class _ManagePageState extends State<ManagePage> {
     if (_budgetFormKey.currentState!.validate()) {
       widget.onUpdateBudget(double.parse(_budgetController.text));
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Budget updated successfully')),
+        const SnackBar(content: Text('Budget updated successfully')),
       );
     }
   }
@@ -671,7 +675,7 @@ class ReportPage extends StatelessWidget {
   final List<Transaction> transactions;
   final List<BudgetEntry> budgets;
 
-  ReportPage({required this.transactions, required this.budgets});
+  const ReportPage({super.key, required this.transactions, required this.budgets});
 
   @override
   Widget build(BuildContext context) {
@@ -688,7 +692,7 @@ class ReportPage extends StatelessWidget {
     allTransactions.sort((a, b) => b.date.compareTo(a.date));
 
     return Padding(
-      padding: EdgeInsets.all(24),
+      padding: const EdgeInsets.all(24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -699,7 +703,7 @@ class ReportPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Expanded(
             child: ListView.builder(
               itemCount: allTransactions.length,
@@ -709,7 +713,7 @@ class ReportPage extends StatelessWidget {
                 bool isBudget = transaction.category == 'Budget';
 
                 return Card(
-                  margin: EdgeInsets.symmetric(vertical: 8),
+                  margin: const EdgeInsets.symmetric(vertical: 8),
                   child: ListTile(
                     leading: CircleAvatar(
                       backgroundColor: isBudget
@@ -726,7 +730,7 @@ class ReportPage extends StatelessWidget {
                     ),
                     title: Text(
                       transaction.title,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     subtitle: Text(
                       '${transaction.category} • ${transaction.date.toString().substring(0, 10)}',
