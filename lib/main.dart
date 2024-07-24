@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(ExpenseTrackerApp()); // Entry point of the Flutter application
+  runApp(ExpenseTrackerApp());
 }
 
 class ExpenseTrackerApp extends StatelessWidget {
@@ -10,184 +10,194 @@ class ExpenseTrackerApp extends StatelessWidget {
     return MaterialApp(
       title: 'Expense Tracker',
       theme: ThemeData(
-        primarySwatch: Colors.indigo, // Primary color theme
-        brightness: Brightness.light, // Light theme
-        scaffoldBackgroundColor: Colors.grey[100], // Background color
+        primarySwatch: Colors.indigo,
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: Colors.grey[100],
         textTheme: TextTheme(
-          bodyLarge: TextStyle(color: Colors.grey[800]), // Text color for large body text
-          bodyMedium: TextStyle(color: Colors.grey[600]), // Text color for medium body text
+          bodyLarge: TextStyle(color: Colors.grey[800]),
+          bodyMedium: TextStyle(color: Colors.grey[600]),
         ),
         appBarTheme: AppBarTheme(
-          backgroundColor: Colors.white, // AppBar background color
-          foregroundColor: Colors.indigo, // AppBar text color
-          elevation: 0, // No shadow
-          iconTheme: IconThemeData(color: Colors.indigo), // Icon color in AppBar
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.indigo,
+          elevation: 0,
+          iconTheme: IconThemeData(color: Colors.indigo),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            foregroundColor: Colors.white, // Button text color
-            backgroundColor: Colors.indigo, // Button background color
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.indigo,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8), // Button corner radius
+              borderRadius: BorderRadius.circular(8),
             ),
-            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24), // Button padding
+            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8), // Input field corner radius
-            borderSide: BorderSide(color: Colors.grey[300]!), // Input field border color
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: Colors.grey[300]!),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8), // Focused input field corner radius
-            borderSide: BorderSide(color: Colors.indigo, width: 2), // Focused input field border color
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(color: Colors.indigo, width: 2),
           ),
-          fillColor: Colors.white, // Input field fill color
-          filled: true, // Enable fill color
-          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16), // Input field padding
+          fillColor: Colors.white,
+          filled: true,
+          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         ),
         cardTheme: CardTheme(
-          elevation: 2, // Card shadow elevation
+          elevation: 2,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12), // Card corner radius
+            borderRadius: BorderRadius.circular(12),
           ),
-          color: Colors.white, // Card background color
+          color: Colors.white,
         ),
       ),
-      home: HomePage(), // Home page of the app
+      home: HomePage(),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState(); // Create the state for the home page
+  _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0; // Index of the selected tab
-  List<Transaction> transactions = []; // List of transactions
-  List<BudgetEntry> budgets = []; // List of budgets
-  DateTime selectedMonth = DateTime.now(); // Currently selected month
+  int _selectedIndex = 0;
+  List<Transaction> transactions = [];
+  List<BudgetEntry> budgets = [];
+  DateTime selectedMonth = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Expense Tracker',
-            style: TextStyle(fontWeight: FontWeight.bold)), // AppBar title
-        actions: [], // No actions in AppBar
+            style: TextStyle(fontWeight: FontWeight.bold)),
+        actions: [],
       ),
       body: Row(
         children: [
-          if (MediaQuery.of(context).size.width > 600) // Check if the screen width is greater than 600
+          if (MediaQuery.of(context).size.width > 600)
             NavigationRail(
-              selectedIndex: _selectedIndex, // Index of the selected item
-              onDestinationSelected: _onItemTapped, // Handle item selection
-              labelType: NavigationRailLabelType.selected, // Show label only for selected item
+              selectedIndex: _selectedIndex,
+              onDestinationSelected: _onItemTapped,
+              labelType: NavigationRailLabelType.selected,
               destinations: [
                 NavigationRailDestination(
-                  icon: Icon(Icons.dashboard_outlined), // Icon for dashboard
-                  selectedIcon: Icon(Icons.dashboard), // Selected icon for dashboard
-                  label: Text('Dashboard'), // Label for dashboard
+                  icon: Icon(Icons.dashboard_outlined),
+                  selectedIcon: Icon(Icons.dashboard),
+                  label: Text('Dashboard'),
                 ),
                 NavigationRailDestination(
-                  icon: Icon(Icons.add_circle_outline), // Icon for add
-                  selectedIcon: Icon(Icons.add_circle), // Selected icon for add
-                  label: Text('Add'), // Label for add
+                  icon: Icon(Icons.add_circle_outline),
+                  selectedIcon: Icon(Icons.add_circle),
+                  label: Text('Add'),
                 ),
                 NavigationRailDestination(
-                  icon: Icon(Icons.bar_chart_outlined), // Icon for report
-                  selectedIcon: Icon(Icons.bar_chart), // Selected icon for report
-                  label: Text('Report'), // Label for report
+                  icon: Icon(Icons.bar_chart_outlined),
+                  selectedIcon: Icon(Icons.bar_chart),
+                  label: Text('Report'),
                 ),
               ],
             ),
           Expanded(
             child: IndexedStack(
-              index: _selectedIndex, // Index of the displayed page
+              index: _selectedIndex,
               children: [
                 DashboardPage(
-                  transactions: transactions, // Pass transactions to dashboard page
-                  budgets: budgets, // Pass budgets to dashboard page
-                  selectedMonth: selectedMonth, // Pass selected month to dashboard page
+                  transactions: transactions,
+                  budgets: budgets,
+                  selectedMonth: selectedMonth,
                 ),
                 ManagePage(
-                  transactions: transactions, // Pass transactions to manage page
-                  onAddTransaction: _addTransaction, // Callback for adding a transaction
-                  budgets: budgets, // Pass budgets to manage page
-                  onUpdateBudget: _updateBudget, // Callback for updating budget
+                  transactions: transactions,
+                  onAddTransaction: _addTransaction,
+                  budgets: budgets,
+                  onUpdateBudget: _updateBudget,
                 ),
-                ReportPage(transactions: transactions, budgets: budgets), // Pass transactions and budgets to report page
+                ReportPage(transactions: transactions, budgets: budgets),
               ],
             ),
           ),
         ],
       ),
-      bottomNavigationBar: MediaQuery.of(context).size.width <= 600 // Check if the screen width is less than or equal to 600
+      bottomNavigationBar: MediaQuery.of(context).size.width <= 600
           ? BottomNavigationBar(
-              currentIndex: _selectedIndex, // Index of the selected item
-              onTap: _onItemTapped, // Handle item tap
+              currentIndex: _selectedIndex,
+              onTap: _onItemTapped,
               items: [
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.dashboard_outlined), // Icon for dashboard
-                  activeIcon: Icon(Icons.dashboard), // Active icon for dashboard
-                  label: 'Dashboard', // Label for dashboard
+                  icon: Icon(Icons.dashboard_outlined),
+                  activeIcon: Icon(Icons.dashboard),
+                  label: 'Dashboard',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.add_circle_outline), // Icon for add
-                  activeIcon: Icon(Icons.add_circle), // Active icon for add
-                  label: 'Add', // Label for add
+                  icon: Icon(Icons.add_circle_outline),
+                  activeIcon: Icon(Icons.add_circle),
+                  label: 'Add',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.bar_chart_outlined), // Icon for report
-                  activeIcon: Icon(Icons.bar_chart), // Active icon for report
-                  label: 'Report', // Label for report
+                  icon: Icon(Icons.bar_chart_outlined),
+                  activeIcon: Icon(Icons.bar_chart),
+                  label: 'Report',
                 ),
               ],
             )
-          : null, // No bottom navigation bar if screen width is greater than 600
+          : null,
     );
   }
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index; // Update selected index
+      _selectedIndex = index;
     });
   }
 
   void _addTransaction(Transaction transaction) {
     setState(() {
-      transactions.add(transaction); // Add new transaction to the list
+      transactions.add(transaction);
     });
   }
 
   void _updateBudget(double budget) {
     setState(() {
-      budgets.add(BudgetEntry(amount: budget, date: DateTime.now())); // Add new budget entry to the list
+      budgets.add(BudgetEntry(amount: budget, date: DateTime.now()));
     });
   }
 }
 
 class DashboardPage extends StatelessWidget {
-  final List<Transaction> transactions; // List of transactions
-  final List<BudgetEntry> budgets; // List of budgets
-  final DateTime selectedMonth; // Selected month
+  final List<Transaction> transactions;
+  final List<BudgetEntry> budgets;
+  final DateTime selectedMonth;
 
   DashboardPage({
-    required this.transactions, // Required parameter for transactions
-    required this.budgets, // Required parameter for budgets
-    required this.selectedMonth, // Required parameter for selected month
+    required this.transactions,
+    required this.budgets,
+    required this.selectedMonth,
   });
 
-  get widget => null; // Placeholder for widget, not used
+  get widget => null;
 
   String _formatMonth(DateTime date) {
     final months = [
-      'January', 'February', 'March', 'April', 'May', 'June', 'July',
-      'August', 'September', 'October', 'November', 'December'
-    ]; // List of month names
-    return '${months[date.month - 1]} ${date.year}'; // Format month and year
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
+    return '${months[date.month - 1]} ${date.year}';
   }
 
   @override
@@ -196,33 +206,33 @@ class DashboardPage extends StatelessWidget {
         .where((t) =>
             t.date.month == selectedMonth.month &&
             t.date.year == selectedMonth.year &&
-            t.amount < 0) // Filter transactions for the selected month and expenses
-        .fold(0, (sum, t) => sum + t.amount.abs()); // Calculate total expenses
+            t.amount < 0)
+        .fold(0, (sum, t) => sum + t.amount.abs());
 
     double currentBudget = budgets
         .where((budget) =>
             budget.date.month == selectedMonth.month &&
-            budget.date.year == selectedMonth.year) // Filter budgets for the selected month
-        .fold(0, (sum, budget) => sum + budget.amount); // Calculate current budget
+            budget.date.year == selectedMonth.year)
+        .fold(0, (sum, budget) => sum + budget.amount);
 
-    bool isOverBudget = totalExpenses > currentBudget; // Check if expenses exceed budget
+    bool isOverBudget = totalExpenses > currentBudget;
 
     return SingleChildScrollView(
-      padding: EdgeInsets.all(24), // Page padding
+      padding: EdgeInsets.all(24),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start, // Align children to start
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildHeader(context), // Build header
-          SizedBox(height: 24), // Spacer
-          _buildExpenseCard(context, totalExpenses), // Build expense card
-          SizedBox(height: 24), // Spacer
+          _buildHeader(context),
+          SizedBox(height: 24),
+          _buildExpenseCard(context, totalExpenses),
+          SizedBox(height: 24),
           if (currentBudget > 0)
             _buildBudgetCard(
-                context, totalExpenses, currentBudget, isOverBudget), // Build budget card if budget is greater than 0
-          SizedBox(height: 24), // Spacer
-          _buildStatusCard(context, isOverBudget), // Build status card
-          SizedBox(height: 24), // Spacer
-          _buildRecentTransactions(context), // Build recent transactions list
+                context, totalExpenses, currentBudget, isOverBudget),
+          SizedBox(height: 24),
+          _buildStatusCard(context, isOverBudget),
+          SizedBox(height: 24),
+          _buildRecentTransactions(context),
         ],
       ),
     );
@@ -230,21 +240,35 @@ class DashboardPage extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween, // Space between header elements
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           'Dashboard',
-          style: Theme.of(context)
-              .textTheme
-              .headlineSmall!
-              .copyWith(fontWeight: FontWeight.bold), // Dashboard title style
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                color: Colors.indigo[800],
+                fontWeight: FontWeight.bold,
+              ),
         ),
-        OutlinedButton.icon(
-          onPressed: () {
-            _selectMonth(context); // Select month when button is pressed
+        ElevatedButton.icon(
+          onPressed: () async {
+            final DateTime? picked = await showDatePicker(
+              context: context,
+              initialDate: selectedMonth,
+              firstDate: DateTime(2000),
+              lastDate: DateTime(2101),
+            );
+            if (picked != null && picked != selectedMonth) {
+              // Update the selected month and rebuild the widget
+              widget.onMonthSelected(picked);
+            }
           },
-          icon: Icon(Icons.calendar_today_outlined), // Calendar icon
-          label: Text(_formatMonth(selectedMonth)), // Formatted month label
+          icon: Icon(Icons.calendar_today, size: 18),
+          label: Text(_formatMonth(selectedMonth)),
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.indigo,
+            backgroundColor: Colors.indigo[50],
+            elevation: 0,
+          ),
         ),
       ],
     );
@@ -252,24 +276,34 @@ class DashboardPage extends StatelessWidget {
 
   Widget _buildExpenseCard(BuildContext context, double totalExpenses) {
     return Card(
-      child: Padding(
-        padding: EdgeInsets.all(16), // Card padding
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      child: Container(
+        padding: EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.indigo, Colors.indigo[700]!],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(16),
+        ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, // Align children to start
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Total Expenses',
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    color: Colors.grey[700],
-                  ), // Total expenses label style
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Colors.white70,
+                  ),
             ),
-            SizedBox(height: 8), // Spacer
+            SizedBox(height: 8),
             Text(
-              '\$${totalExpenses.toStringAsFixed(2)}', // Formatted total expenses
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineMedium!
-                  .copyWith(color: Colors.red, fontWeight: FontWeight.bold), // Total expenses value style
+              '\$${totalExpenses.toStringAsFixed(2)}',
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
           ],
         ),
@@ -279,35 +313,39 @@ class DashboardPage extends StatelessWidget {
 
   Widget _buildBudgetCard(BuildContext context, double totalExpenses,
       double currentBudget, bool isOverBudget) {
-    double remainingBudget = currentBudget - totalExpenses; // Calculate remaining budget
-    double progress = (totalExpenses / currentBudget)
-        .clamp(0.0, 1.0); // Calculate progress percentage
+    double percentUsed = (totalExpenses / currentBudget).clamp(0.0, 1.0);
 
     return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
-        padding: EdgeInsets.all(16), // Card padding
+        padding: EdgeInsets.all(24),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, // Align children to start
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Budget Overview',
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+              'Budget Status',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: Colors.grey[700],
-                  ), // Budget overview label style
-            ),
-            SizedBox(height: 8), // Spacer
-            Text(
-              '\$${remainingBudget.toStringAsFixed(2)} remaining', // Formatted remaining budget
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: isOverBudget ? Colors.red : Colors.green,
                     fontWeight: FontWeight.bold,
-                  ), // Remaining budget value style
+                  ),
             ),
-            SizedBox(height: 16), // Spacer
+            SizedBox(height: 16),
             LinearProgressIndicator(
-              value: progress, // Progress percentage
-              backgroundColor: Colors.grey[300], // Progress bar background color
-              color: isOverBudget ? Colors.red : Colors.green, // Progress bar color
+              value: percentUsed,
+              backgroundColor: Colors.grey[200],
+              valueColor: AlwaysStoppedAnimation<Color>(
+                isOverBudget ? Colors.red : Colors.green,
+              ),
+              minHeight: 8,
+            ),
+            SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildBudgetInfo('Spent', totalExpenses, Colors.red),
+                _buildBudgetInfo('Budget', currentBudget, Colors.green),
+              ],
             ),
           ],
         ),
@@ -315,26 +353,51 @@ class DashboardPage extends StatelessWidget {
     );
   }
 
+  Widget _buildBudgetInfo(String label, double amount, Color color) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(color: Colors.grey[600], fontSize: 12),
+        ),
+        SizedBox(height: 4),
+        Text(
+          '\$${amount.toStringAsFixed(2)}',
+          style: TextStyle(
+            color: color,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildStatusCard(BuildContext context, bool isOverBudget) {
     return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      color: isOverBudget ? Colors.red[50] : Colors.green[50],
       child: Padding(
-        padding: EdgeInsets.all(16), // Card padding
+        padding: EdgeInsets.all(16),
         child: Row(
           children: [
             Icon(
-              isOverBudget ? Icons.warning_amber_outlined : Icons.check_circle_outline,
-              color: isOverBudget ? Colors.red : Colors.green, // Status icon color
-              size: 32, // Status icon size
+              isOverBudget ? Icons.warning : Icons.check_circle,
+              color: isOverBudget ? Colors.red[700] : Colors.green[700],
+              size: 32,
             ),
-            SizedBox(width: 16), // Spacer
+            SizedBox(width: 16),
             Expanded(
               child: Text(
                 isOverBudget
-                    ? 'You are over budget this month.'
-                    : 'You are within budget this month.',
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: isOverBudget ? Colors.red : Colors.green,
-                    ), // Status message style
+                    ? 'You have exceeded your budget.'
+                    : 'You are within your budget.',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: isOverBudget ? Colors.red[700] : Colors.green[700],
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
             ),
           ],
@@ -344,235 +407,132 @@ class DashboardPage extends StatelessWidget {
   }
 
   Widget _buildRecentTransactions(BuildContext context) {
-    final recentTransactions = transactions
+    List<Transaction> recentTransactions = transactions
         .where((t) =>
             t.date.month == selectedMonth.month &&
             t.date.year == selectedMonth.year)
-        .toList(); // Filter transactions for the selected month
+        .toList()
+      ..sort((a, b) => b.date.compareTo(a.date));
 
-    return Card(
-      child: Padding(
-        padding: EdgeInsets.all(16), // Card padding
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, // Align children to start
-          children: [
-            Text(
-              'Recent Transactions',
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    color: Colors.grey[700],
-                  ), // Recent transactions label style
-            ),
-            SizedBox(height: 8), // Spacer
-            ...recentTransactions
-                .map((transaction) => ListTile(
-                      title: Text(transaction.description), // Transaction description
-                      subtitle: Text(transaction.date.toString()), // Transaction date
-                      trailing: Text(
-                        '\$${transaction.amount.toStringAsFixed(2)}', // Formatted transaction amount
-                        style: TextStyle(
-                          color: transaction.amount < 0 ? Colors.red : Colors.green,
-                          fontWeight: FontWeight.bold,
-                        ), // Transaction amount style
-                      ),
-                    ))
-                .toList(), // Map transactions to list tiles
-          ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Recent Transactions',
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: Colors.indigo[800],
+                fontWeight: FontWeight.bold,
+              ),
         ),
-      ),
+        SizedBox(height: 16),
+        ListView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: recentTransactions.take(5).length,
+          itemBuilder: (context, index) {
+            final transaction = recentTransactions[index];
+            return Card(
+              elevation: 2,
+              margin: EdgeInsets.only(bottom: 12),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              child: ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: transaction.amount < 0
+                      ? Colors.red[100]
+                      : Colors.green[100],
+                  child: Icon(
+                    transaction.amount < 0 ? Icons.remove : Icons.add,
+                    color: transaction.amount < 0 ? Colors.red : Colors.green,
+                  ),
+                ),
+                title: Text(
+                  transaction.title,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(transaction.category),
+                trailing: Text(
+                  '\$${transaction.amount.abs().toStringAsFixed(2)}',
+                  style: TextStyle(
+                    color: transaction.amount < 0 ? Colors.red : Colors.green,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ],
     );
-  }
-
-  Future<void> _selectMonth(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedMonth, // Initial date is the selected month
-      firstDate: DateTime(2000), // First date for the date picker
-      lastDate: DateTime(2100), // Last date for the date picker
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(
-              primary: Colors.indigo, // Primary color for the date picker
-              onPrimary: Colors.white, // Text color on primary color
-              onSurface: Colors.indigo, // Text color on surface color
-            ),
-          ),
-          child: child!,
-        );
-      },
-    );
-
-    if (picked != null && picked != selectedMonth) {
-      setState(() {
-        selectedMonth = DateTime(picked.year, picked.month); // Update selected month
-      });
-    }
   }
 }
 
 class ManagePage extends StatefulWidget {
-  final List<Transaction> transactions; // List of transactions
-  final Function(Transaction) onAddTransaction; // Callback for adding a transaction
-  final List<BudgetEntry> budgets; // List of budgets
-  final Function(double) onUpdateBudget; // Callback for updating budget
+  final List<Transaction> transactions;
+  final Function(Transaction) onAddTransaction;
+  final List<BudgetEntry> budgets;
+  final Function(double) onUpdateBudget;
 
   ManagePage({
-    required this.transactions, // Required parameter for transactions
-    required this.onAddTransaction, // Required parameter for adding a transaction
-    required this.budgets, // Required parameter for budgets
-    required this.onUpdateBudget, // Required parameter for updating budget
+    required this.transactions,
+    required this.onAddTransaction,
+    required this.budgets,
+    required this.onUpdateBudget,
   });
 
   @override
-  _ManagePageState createState() => _ManagePageState(); // Create the state for the manage page
+  _ManagePageState createState() => _ManagePageState();
 }
 
 class _ManagePageState extends State<ManagePage> {
-  final _formKey = GlobalKey<FormState>(); // Form key for validation
-  final _amountController = TextEditingController(); // Controller for amount input
-  final _descriptionController = TextEditingController(); // Controller for description input
-  DateTime _selectedDate = DateTime.now(); // Selected date
+  final _expenseFormKey = GlobalKey<FormState>();
+  final _budgetFormKey = GlobalKey<FormState>();
+  final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
+  final _budgetController = TextEditingController();
+  String _selectedCategory = 'Food';
+
+  @override
+  void initState() {
+    super.initState();
+    _budgetController.text =
+        widget.budgets.isNotEmpty ? widget.budgets.last.amount.toString() : '0';
+  }
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.all(24), // Page padding
+      padding: EdgeInsets.all(24),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start, // Align children to start
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Manage Expenses',
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall!
-                .copyWith(fontWeight: FontWeight.bold), // Manage expenses title style
+            'Add Expense',
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  color: Colors.indigo[800],
+                  fontWeight: FontWeight.bold,
+                ),
           ),
-          SizedBox(height: 24), // Spacer
-          Form(
-            key: _formKey, // Form key for validation
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start, // Align children to start
-              children: [
-                TextFormField(
-                  controller: _amountController, // Controller for amount input
-                  decoration: InputDecoration(
-                    labelText: 'Amount', // Label for amount input
-                    prefixText: '\$', // Prefix for amount input
-                  ),
-                  keyboardType: TextInputType.number, // Keyboard type for number input
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter an amount'; // Validation message for empty amount
-                    }
-                    return null; // No validation message
-                  },
-                ),
-                SizedBox(height: 16), // Spacer
-                TextFormField(
-                  controller: _descriptionController, // Controller for description input
-                  decoration: InputDecoration(
-                    labelText: 'Description', // Label for description input
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a description'; // Validation message for empty description
-                    }
-                    return null; // No validation message
-                  },
-                ),
-                SizedBox(height: 16), // Spacer
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton.icon(
-                        onPressed: () {
-                          _selectDate(context); // Select date when button is pressed
-                        },
-                        icon: Icon(Icons.calendar_today_outlined), // Calendar icon
-                        label: Text(
-                            '${_selectedDate.year}-${_selectedDate.month.toString().padLeft(2, '0')}-${_selectedDate.day.toString().padLeft(2, '0')}'), // Formatted selected date
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 24), // Spacer
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      final double amount = double.tryParse(_amountController.text) ?? 0;
-                      final String description = _descriptionController.text;
-
-                      final newTransaction = Transaction(
-                        amount: amount,
-                        description: description,
-                        date: _selectedDate,
-                      ); // Create new transaction
-
-                      widget.onAddTransaction(newTransaction); // Call callback to add transaction
-
-                      _amountController.clear(); // Clear amount input
-                      _descriptionController.clear(); // Clear description input
-                      setState(() {
-                        _selectedDate = DateTime.now(); // Reset selected date
-                      });
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Transaction added successfully')),
-                      ); // Show success message
-                    }
-                  },
-                  child: Text('Add Transaction'), // Button label
-                ),
-              ],
+          SizedBox(height: 16),
+          Card(
+            child: Padding(
+              padding: EdgeInsets.all(24),
+              child: _buildExpenseForm(),
             ),
           ),
-          SizedBox(height: 32), // Spacer
+          SizedBox(height: 32),
           Text(
-            'Manage Budget',
-            style: Theme.of(context)
-                .textTheme
-                .headlineSmall!
-                .copyWith(fontWeight: FontWeight.bold), // Manage budget title style
+            'Set Monthly Budget',
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  color: Colors.indigo[800],
+                  fontWeight: FontWeight.bold,
+                ),
           ),
-          SizedBox(height: 24), // Spacer
-          Form(
-            key: _formKey, // Form key for validation
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start, // Align children to start
-              children: [
-                TextFormField(
-                  controller: _amountController, // Controller for amount input
-                  decoration: InputDecoration(
-                    labelText: 'Budget Amount', // Label for budget amount input
-                    prefixText: '\$', // Prefix for budget amount input
-                  ),
-                  keyboardType: TextInputType.number, // Keyboard type for number input
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a budget amount'; // Validation message for empty amount
-                    }
-                    return null; // No validation message
-                  },
-                ),
-                SizedBox(height: 16), // Spacer
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      final double budgetAmount =
-                          double.tryParse(_amountController.text) ?? 0;
-
-                      widget.onUpdateBudget(budgetAmount); // Call callback to update budget
-
-                      _amountController.clear(); // Clear amount input
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Budget updated successfully')),
-                      ); // Show success message
-                    }
-                  },
-                  child: Text('Update Budget'), // Button label
-                ),
-              ],
+          SizedBox(height: 16),
+          Card(
+            child: Padding(
+              padding: EdgeInsets.all(24),
+              child: _buildBudgetForm(),
             ),
           ),
         ],
@@ -580,42 +540,229 @@ class _ManagePageState extends State<ManagePage> {
     );
   }
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate, // Initial date is the selected date
-      firstDate: DateTime(2000), // First date for the date picker
-      lastDate: DateTime(2100), // Last date for the date picker
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(
-              primary: Colors.indigo, // Primary color for the date picker
-              onPrimary: Colors.white, // Text color on primary color
-              onSurface: Colors.indigo, // Text color on surface color
+  Widget _buildExpenseForm() {
+    return Form(
+      key: _expenseFormKey,
+      child: Column(
+        children: [
+          TextFormField(
+            controller: _titleController,
+            decoration: InputDecoration(
+              labelText: 'Title',
+              prefixIcon: Icon(Icons.title),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter a title';
+              }
+              return null;
+            },
+          ),
+          SizedBox(height: 16),
+          DropdownButtonFormField<String>(
+            value: _selectedCategory,
+            decoration: InputDecoration(
+              labelText: 'Category',
+              prefixIcon: Icon(Icons.category),
+            ),
+            items: ['Food', 'Transportation', 'Entertainment', 'Bills', 'Other']
+                .map((category) =>
+                    DropdownMenuItem(value: category, child: Text(category)))
+                .toList(),
+            onChanged: (value) {
+              setState(() {
+                _selectedCategory = value!;
+              });
+            },
+          ),
+          SizedBox(height: 16),
+          TextFormField(
+            controller: _amountController,
+            decoration: InputDecoration(
+              labelText: 'Amount',
+              prefixIcon: Icon(Icons.attach_money),
+            ),
+            keyboardType: TextInputType.number,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter an amount';
+              }
+              if (double.tryParse(value) == null) {
+                return 'Please enter a valid number';
+              }
+              return null;
+            },
+          ),
+          SizedBox(height: 24),
+          ElevatedButton(
+            onPressed: _submitExpense,
+            child: Text('Add Expense'),
+            style: ElevatedButton.styleFrom(
+              minimumSize: Size(double.infinity, 50),
             ),
           ),
-          child: child!,
-        );
-      },
+        ],
+      ),
     );
+  }
 
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        _selectedDate = picked; // Update selected date
-      });
+  Widget _buildBudgetForm() {
+    return Form(
+      key: _budgetFormKey,
+      child: Column(
+        children: [
+          TextFormField(
+            controller: _budgetController,
+            decoration: InputDecoration(
+              labelText: 'Monthly Budget',
+              prefixIcon: Icon(Icons.account_balance_wallet),
+            ),
+            keyboardType: TextInputType.number,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter a budget';
+              }
+              if (double.tryParse(value) == null) {
+                return 'Please enter a valid number';
+              }
+              return null;
+            },
+          ),
+          SizedBox(height: 24),
+          ElevatedButton(
+            onPressed: _updateBudget,
+            child: Text('Update Budget'),
+            style: ElevatedButton.styleFrom(
+              minimumSize: Size(double.infinity, 50),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _submitExpense() {
+    if (_expenseFormKey.currentState!.validate()) {
+      widget.onAddTransaction(Transaction(
+        title: _titleController.text,
+        category: _selectedCategory,
+        amount: -double.parse(_amountController.text), // Negative for expenses
+        date: DateTime.now(),
+      ));
+      _titleController.clear();
+      _amountController.clear();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Expense added successfully')),
+      );
+    }
+  }
+
+  void _updateBudget() {
+    if (_budgetFormKey.currentState!.validate()) {
+      widget.onUpdateBudget(double.parse(_budgetController.text));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Budget updated successfully')),
+      );
     }
   }
 }
 
+class ReportPage extends StatelessWidget {
+  final List<Transaction> transactions;
+  final List<BudgetEntry> budgets;
+
+  ReportPage({required this.transactions, required this.budgets});
+
+  @override
+  Widget build(BuildContext context) {
+    List<dynamic> allTransactions = [
+      ...transactions,
+      ...budgets.map((budget) => Transaction(
+            title: 'Monthly Budget',
+            category: 'Budget',
+            amount: budget.amount,
+            date: budget.date,
+          )),
+    ];
+
+    allTransactions.sort((a, b) => b.date.compareTo(a.date));
+
+    return Padding(
+      padding: EdgeInsets.all(24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Transaction History',
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  color: Colors.indigo[800],
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          SizedBox(height: 16),
+          Expanded(
+            child: ListView.builder(
+              itemCount: allTransactions.length,
+              itemBuilder: (context, index) {
+                final transaction = allTransactions[index];
+                bool isExpense = transaction.amount < 0;
+                bool isBudget = transaction.category == 'Budget';
+
+                return Card(
+                  margin: EdgeInsets.symmetric(vertical: 8),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: isBudget
+                          ? Colors.blue[100]
+                          : (isExpense ? Colors.red[100] : Colors.green[100]),
+                      child: Icon(
+                        isBudget
+                            ? Icons.account_balance_wallet
+                            : (isExpense ? Icons.remove : Icons.add),
+                        color: isBudget
+                            ? Colors.blue[700]
+                            : (isExpense ? Colors.red[700] : Colors.green[700]),
+                      ),
+                    ),
+                    title: Text(
+                      transaction.title,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                      '${transaction.category} • ${transaction.date.toString().substring(0, 10)}',
+                      style: TextStyle(color: Colors.grey[600]),
+                    ),
+                    trailing: Text(
+                      '\$${transaction.amount.abs().toStringAsFixed(2)}',
+                      style: TextStyle(
+                        color: isBudget
+                            ? Colors.blue[700]
+                            : (isExpense ? Colors.red[700] : Colors.green[700]),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class Transaction {
+  final String title;
+  final String category;
   final double amount;
-  final String description;
   final DateTime date;
 
   Transaction({
+    required this.title,
+    required this.category,
     required this.amount,
-    required this.description,
     required this.date,
   });
 }
@@ -624,12 +771,5 @@ class BudgetEntry {
   final double amount;
   final DateTime date;
 
-  BudgetEntry({
-    required this.amount,
-    required this.date,
-  });
-}
-
-void main() {
-  runApp(ExpenseTrackerApp());
+  BudgetEntry({required this.amount, required this.date});
 }
